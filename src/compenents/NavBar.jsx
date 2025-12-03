@@ -4,12 +4,12 @@ export default function NavBar() {
   return (
     <nav>
       <div>
-        <Link to="/">My Movies</Link>
+        <Link to="/">영화 목록</Link>
       </div>
 
       <div>
-        <Link to="/">Home</Link>
-        <Link to="/details">Details</Link>
+        <Link to="/">홈</Link>
+        <Link to="/details">상세 페이지</Link>
       </div>
     </nav>
   );
