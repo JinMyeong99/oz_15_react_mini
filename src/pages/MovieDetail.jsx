@@ -1,12 +1,10 @@
 import { useState } from "react";
-import movieDetailData from "./movieDetailData.json";
+import movieDetailData from "../data/movieDetailData.json";
 
 export default function MovieDetail() {
   const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
 
   const [movie] = useState(movieDetailData);
-
-  const backdropUrl = imgBaseUrl + movie.backdrop_path;
 
   const posterUrl = imgBaseUrl + movie.poster_path;
 
@@ -14,25 +12,19 @@ export default function MovieDetail() {
 
   return (
     <div>
-      <div
-        style={backdropUrl ? { backgroundImage: `url(${backdropUrl})` } : {}}
-      >
+      <div>
+        {posterUrl && <img src={posterUrl} alt={movie.title} />}
+
         <div>
-          <div>
-            {posterUrl && <img src={posterUrl} alt={movie.title} />}
+          <h1>{movie.title}</h1>
 
-            <div>
-              <h1>{movie.title}</h1>
+          <p>
+            ⭐ {movie.vote_average} ({movie.vote_count}명)
+          </p>
 
-              <p>
-                ⭐ {movie.vote_average} ({movie.vote_count}명)
-              </p>
+          <p>{genresText}</p>
 
-              <p>{genresText}</p>
-
-              <p>{movie.overview}</p>
-            </div>
-          </div>
+          <p>{movie.overview}</p>
         </div>
       </div>
     </div>

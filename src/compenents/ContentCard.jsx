@@ -1,6 +1,5 @@
-const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
-
 export default function ContentCard({ title, rating, posterPath }) {
+  const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
   const imageUrl = imgBaseUrl + posterPath;
 
   return (
