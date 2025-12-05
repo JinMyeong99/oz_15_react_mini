@@ -1,26 +1,35 @@
-import { useState } from "react";
-import movieListData from "./data/movieListData.json";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import ContentCard from "./compenents/ContentCard";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Favorite from "./pages/Favorite";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchGenre } from "./RTK/genre/genreThunk";
 
 function App() {
-  const [movies] = useState(movieListData.results);
+  const dispatch = useDispatch();
+  const genreStatus = useSelector((state) => state.genre.status);
+
+  useEffect(() => {
+    if (genreStatus === "idle") {
+      dispatch(fetchGenre());
+    }
+  }, [genreStatus, dispatch]);
+
+  const location = useLocation();
+  const hideNavbar =
+    location.pathname === "/login" || location.pathname === "/signup";
 
   return (
-    <div className="w-screen h-auto bg-neutral-600 pb-20">
-      <div className="w-[90%] mx-auto">
-        <h1 className="text-3xl text-white font-bold pt-15 pb-4">영화 목록</h1>
-        <div className="grid grid-cols-4 gap-4">
-          {movies.map((movie) => (
-            <ContentCard
-              key={movie.id}
-              title={movie.title}
-              rating={movie.vote_average}
-              posterPath={movie.poster_path}
-            />
-          ))}
-        </div>
-      </div>
+    <div className="bg-neutral-900 min-h-screen text-white">
+      {!hideNavbar && <Navbar />}
+      <main >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorite" element={<Favorite />} />
+        </Routes>
+      </main>
     </div>
   );
 }
